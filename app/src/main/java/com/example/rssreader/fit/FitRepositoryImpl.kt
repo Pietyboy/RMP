@@ -3,9 +3,7 @@ package com.example.rssreader.fit
 import android.content.Context
 import com.google.android.gms.fitness.FitnessOptions
 
-/**
- * Implementation of the FitRepository that uses the Google Fit API service
- */
+
 class FitRepositoryImpl(private val fitApiService: FitApiService) : FitRepository {
     
     override fun hasPermissions(context: Context): Boolean {
