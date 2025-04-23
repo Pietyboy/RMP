@@ -39,13 +39,9 @@ import com.example.rssreader.di.ViewModelFactoryProvider
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.ui.graphics.StrokeCap
 
-private const val TAG = "ActivityScreen"
-
-
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun ActivityScreen(
-    modifier: Modifier = Modifier,
     viewModel: ActivityViewModel = viewModel(
         factory = ViewModelFactoryProvider.provideActivityViewModelFactory()
     )
@@ -74,24 +70,12 @@ fun ActivityScreen(
     ) { result ->
         if (result.resultCode == Activity.RESULT_OK) {
             try {
-                val task = GoogleSignIn.getSignedInAccountFromIntent(result.data)
-                val account = task.getResult(ApiException::class.java)
                 viewModel.checkPermissionsAndFetchData(context)
             } catch (e: ApiException) {
                 viewModel.handleError("Failed to sign in: ${e.message}")
             }
         } else {
             viewModel.handleError("Sign-in canceled or failed")
-        }
-    }
-    
-    val permissionLauncher = rememberLauncherForActivityResult(
-        contract = ActivityResultContracts.StartActivityForResult()
-    ) { result ->
-        if (result.resultCode == Activity.RESULT_OK) {
-            viewModel.checkPermissionsAndFetchData(context)
-        } else {
-            viewModel.handleError("Permission request canceled or denied")
         }
     }
     

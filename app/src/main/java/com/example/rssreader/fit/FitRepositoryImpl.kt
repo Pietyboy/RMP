@@ -27,4 +27,16 @@ class FitRepositoryImpl(private val fitApiService: FitApiService) : FitRepositor
     override suspend fun getUserInfo(context: Context): UserInfo {
         return fitApiService.getUserInfo(context)
     }
-} 
+}
+
+data class UserInfo(
+    val id: String,
+    val email: String,
+    val name: String
+)
+
+data class ActivityData(
+    val startTime: Long,
+    val endTime: Long,
+    val steps: Int
+)
